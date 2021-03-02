@@ -1,0 +1,31 @@
+service: event-bridge-serverless
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+  region: us-east-2
+  stage: dev
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - events:*
+        - lambda:AddPermission
+      Resource: "*"
+
+
+functions:
+  bob:
+    handler: handler.bob
+    # events:
+    #   - eventBridge:
+    #       schedule: rate(1 minutes)
+  alice:
+    handler: handler.alice
+    events:
+      - http:
+          method: GET
+          path: test/alice
+          cors: true
+          
+
