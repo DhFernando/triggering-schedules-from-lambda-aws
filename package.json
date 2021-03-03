@@ -4,7 +4,9 @@
   "description": "",
   "main": "handler.js",
   "dependencies": {
-    "aws-sdk": "^2.853.0"
+    "aws-sdk": "^2.853.0",
+    "serverless-webpack": "^5.3.5",
+    "webpack": "^5.24.2"
   },
   "devDependencies": {},
   "scripts": {

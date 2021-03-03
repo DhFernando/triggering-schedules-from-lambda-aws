@@ -3,7 +3,7 @@ provider:
   name: aws
   runtime: nodejs10.x
 
-  region: us-east-2
+  region: ap-south-1
   stage: dev
 
   iamRoleStatements:
@@ -11,8 +11,14 @@ provider:
       Action:
         - events:*
         - lambda:AddPermission
+        - lambda:RemovePermission
       Resource: "*"
 
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
 
 functions:
   bob:
@@ -20,12 +26,21 @@ functions:
     # events:
     #   - eventBridge:
     #       schedule: rate(1 minutes)
+  bobEnd:
+    handler: handler.bobEnd
   alice:
     handler: handler.alice
     events:
       - http:
           method: GET
-          path: test/alice
+          path: alice/{ruleName}/{duration}/{startAt}
           cors: true
+          request:
+            parameters:
+              paths:
+                ruleName: true 
+                duration: true
+                startAt: true
+                
           
 
